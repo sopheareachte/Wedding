@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sarah & James Wedding Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --accent-gold: #d4af37;
+            --soft-white: #fdfbf7;
+        }
+
+        body {
+            background-color: var(--soft-white);
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Elegant Photo Frame */
+        .photo-frame {
+            box-shadow: 
+                0 0 0 10px white,
+                0 0 0 12px #e5e7eb,
+                0 20px 40px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease-out;
+            touch-action: pan-y;
+        }
+
+        .gallery-container {
+            height: calc(100vh - 80px); /* Leave space for collapsed banner */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Ad Banner Logic */
+        .ad-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            height: 60px; /* Collapsed height */
+        }
+
+        .ad-banner.expanded {
+            height: 60vh;
+        }
+
+        .pull-handle {
+            width: 40px;
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            margin: 10px auto;
+        }
+
+        .swipe-hint {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(0);}
+            40% {transform: translateX(-10px);}
+            60% {transform: translateX(10px);}
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="pt-6 text-center">
+        <h1 class="text-2xl font-serif text-gray-800 italic">Sarah & James</h1>
+        <p class="text-xs tracking-widest text-gray-400 uppercase">September 14, 2024</p>
+    </header>
+
+    <!-- Main Gallery -->
+    <main class="gallery-container px-6" id="gallery">
+        <div id="image-wrapper" class="relative w-full max-w-md aspect-[3/4]">
+            <div id="current-frame" class="photo-frame w-full h-full rounded-sm overflow-hidden bg-white flex items-center justify-center">
+                <img id="main-image" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" alt="Wedding" class="w-full h-full object-cover">
+            </div>
+            
+            <!-- Swipe Hints -->
+            <div class="swipe-hint absolute -bottom-10 left-0 right-0 text-center text-xs text-gray-400">
+                &larr; Swipe to View &rarr;
+            </div>
+        </div>
+    </main>
+
+    <!-- Interactive Ad Banner -->
+    <div id="ad-banner" class="ad-banner">
+        <div class="pull-handle"></div>
+        
+        <!-- Collapsed Content -->
+        <div class="px-6 flex items-center justify-between cursor-pointer" onclick="toggleBanner()">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+                    <span class="text-white font-bold text-xs">EO</span>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold text-gray-800">Elegance Organizers</p>
+                    <p class="text-[10px] text-gray-400">Making dreams come true</p>
+                </div>
+            </div>
+            <button class="bg-gray-900 text-white text-xs px-4 py-1 rounded-full">Inquire</button>
+        </div>
+
+        <!-- Expanded Content (Hidden when collapsed) -->
+        <div class="mt-8 px-6 overflow-y-auto h-[calc(60vh-80px)]">
+            <h2 class="text-xl font-bold mb-2">Plan Your Perfect Day</h2>
+            <p class="text-gray-600 text-sm mb-6 leading-relaxed">
+                Elegance Organizers has been the secret behind the most breathtaking weddings in the country for over 10 years. From venue selection to the final dance, we handle it all.
+            </p>
+            
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <div class="bg-gray-50 p-4 rounded-xl">
+                    <p class="text-xs text-gray-400 uppercase">Experience</p>
+                    <p class="font-bold">500+ Weddings</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-xl">
+                    <p class="text-xs text-gray-400 uppercase">Rating</p>
+                    <p class="font-bold">4.9 / 5.0</p>
+                </div>
+            </div>
+
+            <h3 class="font-semibold mb-3">Our Services</h3>
+            <ul class="space-y-2 text-sm text-gray-600">
+                <li>✨ Full Concept Design</li>
+                <li>✨ Venue & Catering Coordination</li>
+                <li>✨ Floral & Decor Management</li>
+                <li>✨ On-the-day Supervision</li>
+            </ul>
+
+            <button class="w-full bg-black text-white py-4 rounded-xl mt-8 font-bold shadow-lg active:scale-95 transition-transform" onclick="alert('Redirecting to website...')">
+                Visit our Website
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const images = [
+            "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1465495910483-0d674104c995?auto=format&fit=crop&q=80&w=800"
+        ];
+
+        let currentIndex = 0;
+        let startX = 0;
+        const mainImg = document.getElementById('main-image');
+        const frame = document.getElementById('current-frame');
+        const banner = document.getElementById('ad-banner');
+
+        // Toggle Banner
+        function toggleBanner() {
+            banner.classList.toggle('expanded');
+        }
+
+        // Swipe Logic
+        const gallery = document.getElementById('gallery');
+
+        gallery.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        gallery.addEventListener('touchend', (e) => {
+            const endX = e.changedTouches[0].clientX;
+            const diff = startX - endX;
+
+            if (Math.abs(diff) > 50) { // Threshold for swipe
+                if (diff > 0) {
+                    nextImage();
+                } else {
+                    prevImage();
+                }
+            }
+        });
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            transitionImage('next');
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            transitionImage('prev');
+        }
+
+        function transitionImage(direction) {
+            // Animation effect
+            const offset = direction === 'next' ? -100 : 100;
+            frame.style.transform = `translateX(${offset}px) rotate(${offset/10}deg)`;
+            frame.style.opacity = '0';
+
+            setTimeout(() => {
+                mainImg.src = images[currentIndex];
+                frame.style.transform = `translateX(${-offset}px) rotate(${-offset/10}deg)`;
+                
+                setTimeout(() => {
+                    frame.style.transform = 'translateX(0) rotate(0)';
+                    frame.style.opacity = '1';
+                }, 50);
+            }, 300);
+        }
+
+        // Handle banner dragging (swipe up to open)
+        let bannerStartY = 0;
+        banner.addEventListener('touchstart', (e) => {
+            bannerStartY = e.touches[0].clientY;
+        });
+
+        banner.addEventListener('touchend', (e) => {
+            const endY = e.changedTouches[0].clientY;
+            if (bannerStartY - endY > 50 && !banner.classList.contains('expanded')) {
+                banner.classList.add('expanded');
+            } else if (endY - bannerStartY > 50 && banner.classList.contains('expanded')) {
+                banner.classList.remove('expanded');
+            }
+        });
+    </script>
+</body>
+</html>
+
