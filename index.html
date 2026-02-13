@@ -30,7 +30,8 @@
         .gallery-container {
             height: calc(100vh - 80px); /* Leave space for collapsed banner */
             display: flex;
-            align-items: center;
+            align-items: flex-start;
+    padding-top: 10px; /* Minimal gap after title */
             justify-content: center;
             position: relative;
         }
@@ -83,7 +84,7 @@
 
     <!-- Main Gallery -->
     <main class="gallery-container px-6" id="gallery">
-        <div id="image-wrapper" class="relative w-full max-w-md aspect-[3/4]">
+        <div id="image-wrapper" class="relative w-full max-w-sm aspect-[4/5]">
             <div id="current-frame" class="photo-frame w-full h-full rounded-sm overflow-hidden bg-white flex items-center justify-center">
                 <img id="main-image" src="1.jpg" alt="Wedding" class="w-full h-full object-cover">
             </div>
@@ -102,7 +103,7 @@
         <!-- Collapsed Content -->
         <div class="px-6 flex items-center justify-between cursor-pointer" onclick="toggleBanner()">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+                <div class="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
                     <span class="text-white font-bold text-xs">MS</span>
                 </div>
                 <div>
@@ -117,7 +118,7 @@
         <div class="mt-8 px-6 overflow-y-auto h-[calc(60vh-80px)]">
             <h2 class="text-xl font-bold mb-2">Plan Your Perfect Wedding</h2>
             <p class="text-gray-600 text-sm mb-6 leading-relaxed">
-                Catering Organizers has been the secret behind the most breathtaking weddings in the country for over 10 years.
+                Catering Organizers has been the secret behind the most breathtaking weddings.
             </p>
             
             <div class="grid grid-cols-2 gap-4 mb-8">
